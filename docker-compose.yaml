@@ -1,0 +1,32 @@
+services:
+  nvidia-dali:
+    image: nvcr.io/nvidia/pytorch:23.02-py3
+    shm_size: 64g
+    ulimits:
+      memlock: -1
+      stack: 1073741824
+    runtime: nvidia
+    network_mode: host
+    entrypoint:
+      [
+        "jupyter",
+        "lab",
+        "--NotebookApp.ip=0.0.0.0",
+        "--NotebookApp.port=8888",
+        "--NotebookApp.allow_root=True",
+        "--NotebookApp.token=''",
+        "--NotebookApp.password=''",
+        "--Application.log_level='CRITICAL'",
+      ]
+    environment:
+      - DALI_EXTRA_PATH=/data
+    working_dir: /workspace
+    ipc: host
+    volumes:
+      - type: bind
+        source: workspace
+        target: /workspace
+      - type: bind
+        source: data/DALI_extra
+        target: /data
+      - /run/udev:/run/udev:ro

@@ -1,0 +1,3 @@
+[submodule "data/DALI_extra"]
+	path = data/DALI_extra
+	url = https://github.com/NVIDIA/DALI_extra.git
